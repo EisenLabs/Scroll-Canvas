@@ -18,25 +18,21 @@ contract ScrollBadgeSimple is ScrollBadgeAccessControl, ScrollBadgeSingleton {
     }
 
     /// @inheritdoc ScrollBadge
-    function onIssueBadge(Attestation calldata attestation)
-        internal
-        override (ScrollBadgeAccessControl, ScrollBadgeSingleton)
-        returns (bool)
-    {
+    function onIssueBadge(
+        Attestation calldata attestation
+    ) internal override(ScrollBadgeAccessControl, ScrollBadgeSingleton) returns (bool) {
         return super.onIssueBadge(attestation);
     }
 
     /// @inheritdoc ScrollBadge
-    function onRevokeBadge(Attestation calldata attestation)
-        internal
-        override (ScrollBadgeAccessControl, ScrollBadgeSingleton)
-        returns (bool)
-    {
+    function onRevokeBadge(
+        Attestation calldata attestation
+    ) internal override(ScrollBadgeAccessControl, ScrollBadgeSingleton) returns (bool) {
         return super.onRevokeBadge(attestation);
     }
 
     /// @inheritdoc ScrollBadge
-    function badgeTokenURI(bytes32 /*uid*/ ) public view override returns (string memory) {
+    function badgeTokenURI(bytes32 /*uid*/) public view override returns (string memory) {
         return sharedTokenURI;
     }
 }

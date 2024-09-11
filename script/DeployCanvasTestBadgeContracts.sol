@@ -21,25 +21,19 @@ contract CanvasTestBadge is ScrollBadgeSelfAttest, ScrollBadgeSingleton {
         sharedTokenURI = tokenUri_;
     }
 
-    function onIssueBadge(Attestation calldata attestation)
-        internal
-        virtual
-        override (ScrollBadgeSelfAttest, ScrollBadgeSingleton)
-        returns (bool)
-    {
+    function onIssueBadge(
+        Attestation calldata attestation
+    ) internal virtual override(ScrollBadgeSelfAttest, ScrollBadgeSingleton) returns (bool) {
         return super.onIssueBadge(attestation);
     }
 
-    function onRevokeBadge(Attestation calldata attestation)
-        internal
-        virtual
-        override (ScrollBadgeSelfAttest, ScrollBadgeSingleton)
-        returns (bool)
-    {
+    function onRevokeBadge(
+        Attestation calldata attestation
+    ) internal virtual override(ScrollBadgeSelfAttest, ScrollBadgeSingleton) returns (bool) {
         return super.onRevokeBadge(attestation);
     }
 
-    function badgeTokenURI(bytes32 /*uid*/ ) public view override returns (string memory) {
+    function badgeTokenURI(bytes32 /*uid*/) public view override returns (string memory) {
         return sharedTokenURI;
     }
 }
@@ -61,15 +55,18 @@ contract DeployCanvasTestBadgeContracts is Script {
 
         // deploy test badges
         CanvasTestBadge badge1 = new CanvasTestBadge(
-            address(resolver), "ipfs://bafybeibc5sgo2plmjkq2tzmhrn54bk3crhnc23zd2msg4ea7a4pxrkgfna/1"
+            address(resolver),
+            "ipfs://bafybeibc5sgo2plmjkq2tzmhrn54bk3crhnc23zd2msg4ea7a4pxrkgfna/1"
         );
 
         CanvasTestBadge badge2 = new CanvasTestBadge(
-            address(resolver), "ipfs://bafybeibc5sgo2plmjkq2tzmhrn54bk3crhnc23zd2msg4ea7a4pxrkgfna/2"
+            address(resolver),
+            "ipfs://bafybeibc5sgo2plmjkq2tzmhrn54bk3crhnc23zd2msg4ea7a4pxrkgfna/2"
         );
 
         CanvasTestBadge badge3 = new CanvasTestBadge(
-            address(resolver), "ipfs://bafybeibc5sgo2plmjkq2tzmhrn54bk3crhnc23zd2msg4ea7a4pxrkgfna/3"
+            address(resolver),
+            "ipfs://bafybeibc5sgo2plmjkq2tzmhrn54bk3crhnc23zd2msg4ea7a4pxrkgfna/3"
         );
 
         // deploy origins NFT badge

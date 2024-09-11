@@ -9,18 +9,13 @@ import {EMPTY_UID, NO_EXPIRATION_TIME} from "@eas/contracts/Common.sol";
 import {ISchemaResolver} from "@eas/contracts/resolver/ISchemaResolver.sol";
 import {SchemaRegistry, ISchemaRegistry} from "@eas/contracts/SchemaRegistry.sol";
 
-import {
-    IEAS,
-    AttestationRequest,
-    AttestationRequestData,
-    RevocationRequest,
-    RevocationRequestData
-} from "@eas/contracts/IEAS.sol";
+import {IEAS, AttestationRequest, AttestationRequestData, RevocationRequest, RevocationRequestData} from "@eas/contracts/IEAS.sol";
 
 import {TransparentUpgradeableProxy} from "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
 
 import {ScrollBadgeResolver} from "../src/resolver/ScrollBadgeResolver.sol";
 import {ProfileRegistry} from "../src/profile/ProfileRegistry.sol";
+import {console} from "forge-std/console.sol";
 
 contract ScrollBadgeTestBase is Test {
     ISchemaRegistry internal registry;
@@ -35,21 +30,31 @@ contract ScrollBadgeTestBase is Test {
     address internal constant PROXY_ADMIN_ADDRESS = 0x2000000000000000000000000000000000000000;
 
     function setUp() public virtual {
+        vm.createSelectFork(vm.envString("SCROLL_MAINNET_RPC_URL"));
         // EAS infra
-        registry = new SchemaRegistry();
-        eas = new EAS(registry);
-
+        registry = SchemaRegistry(vm.envAddress("SCROLL_MAINNET_EAS_SCHEMA_REGISTRY_ADDRESS"));
+        console.log("registry", address(registry));
+        eas = EAS(vm.envAddress("SCROLL_MAINNET_EAS_ADDRESS"));
+        console.log("eas", address(eas));
         // Scroll components
         // no need to initialize the registry, since resolver
         // only uses it to see if a profile has been minted or not.
-        address profileRegistry = address(new ProfileRegistry());
+        address profileRegistry = address(vm.envAddress("SCROLL_MAINNET_PROFILE_REGISTRY_ADDRESS"));
+        console.log("profileRegistry", profileRegistry);
+        address resolverImpl; // = address(new ScrollBadgeResolver(address(eas), profileRegistry));
+        address resolverProxy; // = address(new TransparentUpgradeableProxy(resolverImpl, PROXY_ADMIN_ADDRESS, ""));
+        resolver = ScrollBadgeResolver(payable(vm.envAddress("SCROLL_MAINNET_BADGE_RESOLVER_ADDRESS")));
+        // resolver.initialize();
+        console.log("resolver", address(resolver));
 
-        address resolverImpl = address(new ScrollBadgeResolver(address(eas), profileRegistry));
-        address resolverProxy = address(new TransparentUpgradeableProxy(resolverImpl, PROXY_ADMIN_ADDRESS, ""));
-        resolver = ScrollBadgeResolver(payable(resolverProxy));
-        resolver.initialize();
+        schema = vm.envBytes32("SCROLL_MAINNET_BADGE_SCHEMA");
+        console.logBytes32(schema);
 
-        schema = resolver.schema();
+        address owner = resolver.owner();
+        vm.startPrank(owner);
+        resolver.toggleBadge(address(0xb355D013857Ec0862499e5Deb97CB4A6A021a756), true);
+        resolver.toggleWhitelist(false);
+        vm.stopPrank();
     }
 
     function _attest(address badge, bytes memory payload, address recipient) internal returns (bytes32) {

@@ -2,12 +2,7 @@
 
 pragma solidity 0.8.19;
 
-import {
-    EIP712Proxy,
-    AttestationRequest,
-    RevocationRequest,
-    DelegatedProxyAttestationRequest
-} from "@eas/contracts/eip712/proxy/EIP712Proxy.sol";
+import {EIP712Proxy, AttestationRequest, RevocationRequest, DelegatedProxyAttestationRequest} from "@eas/contracts/eip712/proxy/EIP712Proxy.sol";
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -38,12 +33,9 @@ contract AttesterProxy is EIP712Proxy, Ownable {
     }
 
     /// @inheritdoc EIP712Proxy
-    function attestByDelegation(DelegatedProxyAttestationRequest calldata delegatedRequest)
-        public
-        payable
-        override
-        returns (bytes32)
-    {
+    function attestByDelegation(
+        DelegatedProxyAttestationRequest calldata delegatedRequest
+    ) public payable override returns (bytes32) {
         // Ensure that only the owner is allowed to delegate attestations.
         _verifyAttester(delegatedRequest.attester);
 

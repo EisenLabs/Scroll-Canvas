@@ -15,3 +15,13 @@ number_underscore = "thousands"
 override_spacing = true
 wrap_comments = true
 ignore = []
+
+
+[rpc_endpoints]
+scroll = "${ETH_NODE_URI_SCROLL}"
+scroll_test = "${ETH_NODE_URI_SCROLL}"
+
+
+[etherscan]
+scroll = { key = "${SCROLL_ETHERSCAN_API_KEY}", url = "https://scrollscan.com/" }
+scroll_test = { key = "${SCROLL_ETHERSCAN_API_KEY}", url = "https://sepolia.scrollscan.com/" }

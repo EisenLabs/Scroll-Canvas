@@ -42,9 +42,11 @@ contract ScrollBadgePowerRank is
     }
 
     /// @inheritdoc ScrollBadge
-    function onIssueBadge(Attestation calldata attestation)
+    function onIssueBadge(
+        Attestation calldata attestation
+    )
         internal
-        override (
+        override(
             ScrollBadgeAccessControl,
             ScrollBadgeCustomPayload,
             ScrollBadgeNoExpiry,
@@ -58,17 +60,23 @@ contract ScrollBadgePowerRank is
         }
 
         bytes memory payload = getPayload(attestation);
-        (uint256 firstTxTimestamp) = decodePayloadData(payload);
+        uint256 firstTxTimestamp = decodePayloadData(payload);
         badgeRank[attestation.uid] = timestampToRank(firstTxTimestamp);
 
         return true;
     }
 
     /// @inheritdoc ScrollBadge
-    function onRevokeBadge(Attestation calldata attestation)
+    function onRevokeBadge(
+        Attestation calldata attestation
+    )
         internal
-        override (
-            ScrollBadge, ScrollBadgeAccessControl, ScrollBadgeCustomPayload, ScrollBadgeNoExpiry, ScrollBadgeSingleton
+        override(
+            ScrollBadge,
+            ScrollBadgeAccessControl,
+            ScrollBadgeCustomPayload,
+            ScrollBadgeNoExpiry,
+            ScrollBadgeSingleton
         )
         returns (bool)
     {
@@ -97,7 +105,7 @@ contract ScrollBadgePowerRank is
         Attestation memory badge = getAndValidateBadge(uid);
 
         bytes memory payload = getPayload(badge);
-        (uint256 firstTxTimestamp) = decodePayloadData(payload);
+        uint256 firstTxTimestamp = decodePayloadData(payload);
         uint256 newRank = timestampToRank(firstTxTimestamp);
 
         uint256 oldRank = badgeRank[uid];
@@ -113,7 +121,7 @@ contract ScrollBadgePowerRank is
         }
 
         bytes memory payload = getPayload(badge);
-        (uint256 firstTxTimestamp) = decodePayloadData(payload);
+        uint256 firstTxTimestamp = decodePayloadData(payload);
         uint256 newRank = timestampToRank(firstTxTimestamp);
 
         uint256 oldRank = badgeRank[uid];

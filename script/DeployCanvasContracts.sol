@@ -8,10 +8,7 @@ import {EAS} from "@eas/contracts/EAS.sol";
 
 import {ProxyAdmin} from "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
 
-import {
-    ITransparentUpgradeableProxy,
-    TransparentUpgradeableProxy
-} from "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
+import {ITransparentUpgradeableProxy, TransparentUpgradeableProxy} from "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
 
 import {EmptyContract} from "../src/misc/EmptyContract.sol";
 import {Profile} from "../src/profile/Profile.sol";

@@ -21,28 +21,24 @@ function decodePayloadData(bytes memory data) pure returns (uint8) {
 /// @title ScrollBadgeLevels
 /// @notice A simple badge that represents the user's level.
 contract ScrollBadgeLevels is ScrollBadgeAccessControl, ScrollBadgeCustomPayload, ScrollBadgeDefaultURI {
-    constructor(address resolver_, string memory _defaultBadgeURI)
-        ScrollBadge(resolver_)
-        ScrollBadgeDefaultURI(_defaultBadgeURI)
-    {
+    constructor(
+        address resolver_,
+        string memory _defaultBadgeURI
+    ) ScrollBadge(resolver_) ScrollBadgeDefaultURI(_defaultBadgeURI) {
         // empty
     }
 
     /// @inheritdoc ScrollBadge
-    function onIssueBadge(Attestation calldata attestation)
-        internal
-        override (ScrollBadge, ScrollBadgeAccessControl, ScrollBadgeCustomPayload)
-        returns (bool)
-    {
+    function onIssueBadge(
+        Attestation calldata attestation
+    ) internal override(ScrollBadge, ScrollBadgeAccessControl, ScrollBadgeCustomPayload) returns (bool) {
         return super.onIssueBadge(attestation);
     }
 
     /// @inheritdoc ScrollBadge
-    function onRevokeBadge(Attestation calldata attestation)
-        internal
-        override (ScrollBadge, ScrollBadgeAccessControl, ScrollBadgeCustomPayload)
-        returns (bool)
-    {
+    function onRevokeBadge(
+        Attestation calldata attestation
+    ) internal override(ScrollBadge, ScrollBadgeAccessControl, ScrollBadgeCustomPayload) returns (bool) {
         return super.onRevokeBadge(attestation);
     }
 
@@ -66,7 +62,7 @@ contract ScrollBadgeLevels is ScrollBadgeAccessControl, ScrollBadgeCustomPayload
     function getCurrentLevel(bytes32 uid) public view returns (uint8) {
         Attestation memory badge = getAndValidateBadge(uid);
         bytes memory payload = getPayload(badge);
-        (uint8 level) = decodePayloadData(payload);
+        uint8 level = decodePayloadData(payload);
         return level;
     }
 }

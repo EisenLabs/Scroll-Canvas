@@ -14,13 +14,7 @@ import {IProfileRegistry} from "../interfaces/IProfileRegistry.sol";
 import {IScrollBadgeResolver} from "../interfaces/IScrollBadgeResolver.sol";
 import {MAX_ATTACHED_BADGE_NUM} from "../Common.sol";
 
-import {
-    AttestationOwnerMismatch,
-    BadgeCountReached,
-    LengthMismatch,
-    TokenNotOwnedByUser,
-    Unauthorized
-} from "../Errors.sol";
+import {AttestationOwnerMismatch, BadgeCountReached, LengthMismatch, TokenNotOwnedByUser, Unauthorized} from "../Errors.sol";
 
 contract Profile is IProfile, Initializable, Multicall {
     /**

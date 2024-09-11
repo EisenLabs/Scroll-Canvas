@@ -17,27 +17,21 @@ contract ScrollBadgePermissionless is ScrollBadgeSelfAttest, ScrollBadgeEligibil
     }
 
     /// @inheritdoc ScrollBadge
-    function onIssueBadge(Attestation calldata attestation)
-        internal
-        virtual
-        override (ScrollBadge, ScrollBadgeSelfAttest, ScrollBadgeSingleton)
-        returns (bool)
-    {
+    function onIssueBadge(
+        Attestation calldata attestation
+    ) internal virtual override(ScrollBadge, ScrollBadgeSelfAttest, ScrollBadgeSingleton) returns (bool) {
         return super.onIssueBadge(attestation);
     }
 
     /// @inheritdoc ScrollBadge
-    function onRevokeBadge(Attestation calldata attestation)
-        internal
-        virtual
-        override (ScrollBadge, ScrollBadgeSelfAttest, ScrollBadgeSingleton)
-        returns (bool)
-    {
+    function onRevokeBadge(
+        Attestation calldata attestation
+    ) internal virtual override(ScrollBadge, ScrollBadgeSelfAttest, ScrollBadgeSingleton) returns (bool) {
         return super.onRevokeBadge(attestation);
     }
 
     /// @inheritdoc ScrollBadge
-    function badgeTokenURI(bytes32 /*uid*/ ) public pure override returns (string memory) {
+    function badgeTokenURI(bytes32 /*uid*/) public pure override returns (string memory) {
         return "";
     }
 }

@@ -1,3 +1,4 @@
 @eas/=node_modules/@ethereum-attestation-service/eas-contracts/
-@openzeppelin/=node_modules/@openzeppelin
-solmate/=node_modules/solmate/src
+@openzeppelin/=node_modules/@openzeppelin/
+solmate/=node_modules/solmate/src/
+contracts/=src/

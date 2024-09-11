@@ -42,9 +42,11 @@ contract EthereumYearBadge is
     }
 
     /// @inheritdoc ScrollBadge
-    function onIssueBadge(Attestation calldata attestation)
+    function onIssueBadge(
+        Attestation calldata attestation
+    )
         internal
-        override (
+        override(
             ScrollBadgeAccessControl,
             ScrollBadgeCustomPayload,
             ScrollBadgeNoExpiry,
@@ -57,10 +59,16 @@ contract EthereumYearBadge is
     }
 
     /// @inheritdoc ScrollBadge
-    function onRevokeBadge(Attestation calldata attestation)
+    function onRevokeBadge(
+        Attestation calldata attestation
+    )
         internal
-        override (
-            ScrollBadge, ScrollBadgeAccessControl, ScrollBadgeCustomPayload, ScrollBadgeNoExpiry, ScrollBadgeSingleton
+        override(
+            ScrollBadge,
+            ScrollBadgeAccessControl,
+            ScrollBadgeCustomPayload,
+            ScrollBadgeNoExpiry,
+            ScrollBadgeSingleton
         )
         returns (bool)
     {

@@ -33,11 +33,9 @@ contract ScrollBadgeTokenOwner is ScrollBadgeCustomPayload, ScrollBadgeSelfAttes
     }
 
     /// @inheritdoc ScrollBadge
-    function onIssueBadge(Attestation calldata attestation)
-        internal
-        override (ScrollBadgeCustomPayload, ScrollBadgeSelfAttest, ScrollBadgeSingleton)
-        returns (bool)
-    {
+    function onIssueBadge(
+        Attestation calldata attestation
+    ) internal override(ScrollBadgeCustomPayload, ScrollBadgeSelfAttest, ScrollBadgeSingleton) returns (bool) {
         if (!super.onIssueBadge(attestation)) {
             return false;
         }
@@ -58,11 +56,9 @@ contract ScrollBadgeTokenOwner is ScrollBadgeCustomPayload, ScrollBadgeSelfAttes
     }
 
     /// @inheritdoc ScrollBadge
-    function onRevokeBadge(Attestation calldata attestation)
-        internal
-        override (ScrollBadgeCustomPayload, ScrollBadgeSelfAttest, ScrollBadgeSingleton)
-        returns (bool)
-    {
+    function onRevokeBadge(
+        Attestation calldata attestation
+    ) internal override(ScrollBadgeCustomPayload, ScrollBadgeSelfAttest, ScrollBadgeSingleton) returns (bool) {
         return super.onRevokeBadge(attestation);
     }
 

@@ -59,7 +59,7 @@ abstract contract ScrollBadgeSBT is SBT, ScrollBadgeNoExpiry {
     }
 
     /// @inheritdoc ERC721
-    function tokenURI(uint256 tokenId) public view virtual override (ERC721) returns (string memory) {
+    function tokenURI(uint256 tokenId) public view virtual override(ERC721) returns (string memory) {
         bytes32 uid = bytes32(tokenId);
         return badgeTokenURI(uid);
     }

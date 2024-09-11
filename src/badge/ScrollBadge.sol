@@ -64,14 +64,14 @@ abstract contract ScrollBadge is IScrollBadge {
     /// @notice A resolver callback that should be implemented by child contracts.
     /// @param {attestation} The new attestation.
     /// @return Whether the attestation is valid.
-    function onIssueBadge(Attestation calldata /*attestation*/ ) internal virtual returns (bool) {
+    function onIssueBadge(Attestation calldata /*attestation*/) internal virtual returns (bool) {
         return true;
     }
 
     /// @notice A resolver callback that should be implemented by child contracts.
     /// @param {attestation} The existing attestation to be revoked.
     /// @return Whether the attestation can be revoked.
-    function onRevokeBadge(Attestation calldata /*attestation*/ ) internal virtual returns (bool) {
+    function onRevokeBadge(Attestation calldata /*attestation*/) internal virtual returns (bool) {
         return true;
     }
 
@@ -79,7 +79,7 @@ abstract contract ScrollBadge is IScrollBadge {
     function getAndValidateBadge(bytes32 uid) public view returns (Attestation memory) {
         Attestation memory attestation = IScrollBadgeResolver(resolver).getAndValidateBadge(uid);
 
-        (address badge,) = decodeBadgeData(attestation.data);
+        (address badge, ) = decodeBadgeData(attestation.data);
 
         if (badge != address(this)) {
             revert AttestationBadgeMismatch(uid);

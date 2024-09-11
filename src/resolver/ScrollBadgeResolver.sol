@@ -15,16 +15,7 @@ import {IScrollBadgeResolver} from "../interfaces/IScrollBadgeResolver.sol";
 import {SCROLL_BADGE_SCHEMA, decodeBadgeData} from "../Common.sol";
 import {ScrollBadgeResolverWhitelist} from "./ScrollBadgeResolverWhitelist.sol";
 
-import {
-    AttestationExpired,
-    AttestationNotFound,
-    AttestationRevoked,
-    AttestationSchemaMismatch,
-    BadgeNotAllowed,
-    BadgeNotFound,
-    ResolverPaymentsDisabled,
-    UnknownSchema
-} from "../Errors.sol";
+import {AttestationExpired, AttestationNotFound, AttestationRevoked, AttestationSchemaMismatch, BadgeNotAllowed, BadgeNotFound, ResolverPaymentsDisabled, UnknownSchema} from "../Errors.sol";
 
 /// @title ScrollBadgeResolver
 /// @notice This resolver contract receives callbacks every time a Scroll badge
@@ -85,11 +76,10 @@ contract ScrollBadgeResolver is IScrollBadgeResolver, SchemaResolver, ScrollBadg
      */
 
     /// @inheritdoc SchemaResolver
-    function onAttest(Attestation calldata attestation, uint256 value)
-        internal
-        override (SchemaResolver)
-        returns (bool)
-    {
+    function onAttest(
+        Attestation calldata attestation,
+        uint256 value
+    ) internal override(SchemaResolver) returns (bool) {
         // do not accept resolver tips
         if (value != 0) {
             revert ResolverPaymentsDisabled();
@@ -101,7 +91,7 @@ contract ScrollBadgeResolver is IScrollBadgeResolver, SchemaResolver, ScrollBadg
         }
 
         // decode attestation
-        (address badge,) = decodeBadgeData(attestation.data);
+        (address badge, ) = decodeBadgeData(attestation.data);
 
         // check if badge exists
         if (!Address.isContract(badge)) {
@@ -129,18 +119,17 @@ contract ScrollBadgeResolver is IScrollBadgeResolver, SchemaResolver, ScrollBadg
     }
 
     /// @inheritdoc SchemaResolver
-    function onRevoke(Attestation calldata attestation, uint256 value)
-        internal
-        override (SchemaResolver)
-        returns (bool)
-    {
+    function onRevoke(
+        Attestation calldata attestation,
+        uint256 value
+    ) internal override(SchemaResolver) returns (bool) {
         // do not accept resolver tips
         if (value != 0) {
             revert ResolverPaymentsDisabled();
         }
 
         // delegate to badge contract for application-specific checks and actions
-        (address badge,) = decodeBadgeData(attestation.data);
+        (address badge, ) = decodeBadgeData(attestation.data);
 
         if (!IScrollBadge(badge).revokeBadge(attestation)) {
             return false;
